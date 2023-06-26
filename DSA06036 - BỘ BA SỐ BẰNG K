@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+bool check(ll a[], ll n, ll k) {
+	for(int i = 0; i < n - 2; i++) {
+		ll l = i + 1, r = n - 1;
+		while(l < r) {
+			ll sum = a[l] + a[r] + a[i];
+			if(sum == k) return true;
+			else if(sum < k) ++l;
+			else --r;	
+		}
+	}
+	return false;
+}
+
+int main() {
+    int t; cin >> t;
+    while(t--) {
+    	ll n, k; cin >> n >> k;
+    	ll a[n];
+    	for(ll &i : a) cin >> i;
+    	sort(a, a + n);
+    	if(check(a, n, k)) cout << "YES" << endl;
+    	else cout << "NO" << endl;
+	}
+}
