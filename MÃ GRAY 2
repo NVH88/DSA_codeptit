@@ -1,0 +1,21 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		string s; cin >> s;
+		string x = s;
+		for(int i = 1; i < s.length(); ++i) {
+			if(s[i] == '1') {
+				if(x[i - 1] == '0') x[i] = '1';
+				else x[i] = '0';
+			}
+			else {
+				if(x[i - 1] == '0') x[i] = '0';
+				else x[i] = '1';
+			}
+		}
+		cout << x << endl;
+	}
+}
