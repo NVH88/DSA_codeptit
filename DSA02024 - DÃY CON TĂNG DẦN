@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, a[25], x[25];
+set<string> se;
+
+void Try(int i, int tmp, string s) {
+	for(int j = i; j <= n; ++j) {
+		if(a[j] > tmp) {
+			if(s.size()) {
+				se.insert(s + to_string(a[j]));
+			}
+			Try(j + 1, a[j], s + to_string(a[j]) + " ");
+		}
+	}
+}
+
+int main() {
+	cin >> n;
+	for(int i = 1; i <= n; ++i) {
+		cin >> a[i];
+	}
+	Try(1, 0, "");
+	for(string i : se) cout << i << endl;
+}
