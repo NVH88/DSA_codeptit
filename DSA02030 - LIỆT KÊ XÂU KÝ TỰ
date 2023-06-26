@@ -1,0 +1,22 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, k, a[15];
+
+void Try(int i, int j) {
+	for(int p = j; p <= n; ++p) {
+		a[i] = p;
+		if(i == k) {
+			for(int idx = 1; idx <= k; ++idx) cout << (char)('A' + a[idx] - 1);
+			cout << endl;
+		}
+		else Try(i + 1, p);
+	}
+}
+
+int main() {
+	char x; cin >> x;
+	cin >> k;
+	n = x - 'A' + 1;
+	Try(1, 1);
+}
