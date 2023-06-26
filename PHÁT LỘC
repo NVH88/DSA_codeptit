@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, a[20];
+
+void Try(int i, int cnt) {
+	if(i == n - 1) {
+		if(cnt == 3) return;
+		cout << 8;
+		for(int j = 1; j < i; j++) cout << a[j];
+		cout << 6 << endl;
+		return;
+	}
+	if(cnt < 3) {
+		a[i] = 6;
+		Try(i + 1, cnt + 1);
+	}
+	if(a[i - 1] != 8) {
+		a[i] = 8;
+		Try(i + 1, 0);
+	}
+}
+
+int main() {
+	cin >> n;
+	a[0] = 8;
+	Try(1, 0);
+}
