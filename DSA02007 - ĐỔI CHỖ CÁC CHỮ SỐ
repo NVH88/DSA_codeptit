@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+string s;
+int ans, c;
+
+void Try(int i, string z, int cnt) {
+    if(cnt == 0 || i == s.length()) return;
+    for(int j = i + 1; j < s.length(); ++j) {
+        string k = z;
+        swap(k[i], k[j]);
+        if(stoi(k) > stoi(z)) {
+            ans = max(ans, stoi(k));
+            Try(i + 1, k, cnt - 1);
+        }
+        else Try(i + 1, z, cnt);
+    }
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cin >> c >> s;
+	    ans = stoi(s);
+	    Try(0, s, c);
+	    cout << ans << endl;
+	}
+}
