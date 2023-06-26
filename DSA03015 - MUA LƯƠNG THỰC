@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+const int mod = 1e9 + 7;
+
+int main() {
+	int t;
+	cin >> t;
+	while(t--) {
+		int n, s, m;
+		cin >> n >> s >> m;
+		int s2 = s - s / 7;
+		if(s2 * n < s * m) {
+			cout << -1 << endl;
+		}
+		else {
+			int d = s * m;
+			int a = d / n;
+			if(a * n < d) {
+				a++;
+			}
+			cout << a << endl;
+		}
+	}
+}
