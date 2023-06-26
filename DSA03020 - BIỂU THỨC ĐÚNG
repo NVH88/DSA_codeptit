@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		string s; cin >> s;
+		stack<char> st;
+		int res = 0, cnt = 0;
+		for(char i : s) {
+			if(st.empty()) {
+				st.push(i);
+				cnt = 0;
+			}
+			else if(st.top() == '[') {
+				if(i == '[') st.push(i);
+				else {
+					cnt += 2;
+					st.pop();
+				}
+			}
+			else {
+				if(i == ']') st.push(i);
+				else {
+					res += cnt + st.size();
+					st.pop();
+					// case: ]][[
+				}
+			}
+		}
+		cout << res << endl;
+	}
+}
