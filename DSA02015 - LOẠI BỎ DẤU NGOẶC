@@ -1,0 +1,76 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, k;
+string s;
+set<string> se;
+
+//bool check(string s) {
+//	stack<char> st;
+//	for(char i : s) {
+//		if(i == '(') st.push(i);
+//		else if(i == ')'){
+//			if(st.size()) return true;
+//		}
+//	}
+//	return false;
+//}
+
+int calc(string s) {
+	int ans = 0;
+	stack<char> st;
+	for(char i : s) {
+		if(i == '(') st.push(i);
+		else if(i == ')'){
+			if(!st.size()) ++ans;
+			else st.pop();
+		}
+	}
+	return ans + st.size();
+}
+
+void Try(int i, int cnt, string ans, stack<char> st) {
+	if(i == n) {
+		if(!st.size() && cnt == 0 && ans.size() > 1) se.insert(ans);
+		return;
+	}
+	else if(s[i] == ')' && !st.size()) {
+		if(cnt > 0) Try(i + 1, cnt - 1, ans, st);
+		else return;
+	}
+	else if(s[i] == '(') {
+		stack<char> st2 = st;
+		st2.push(s[i]);
+		Try(i + 1, cnt, ans + "(", st2);
+		Try(i + 1, cnt - 1, ans, st);
+	}
+	else {
+		if(s[i] == ')') {
+			stack<char> st2 = st;
+			st2.pop();
+			Try(i + 1, cnt, ans + ")", st2);
+			if(cnt > 0) Try(i + 1, cnt - 1, ans, st);
+		}
+		else {
+			Try(i + 1, cnt, ans + string(1, s[i]), st);
+		}
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cin >> s;
+		n = s.length(); k = calc(s);
+//		cout << k << endl;
+//		if(!check(s)) cout << -1 << endl;
+//		else {
+			stack<char> st;
+			Try(0, k, "", st);
+			for(string i : se) cout << i << " ";
+			if(!se.size()) cout << -1;
+			cout << endl;
+			se.clear();
+//		}
+	}
+}
