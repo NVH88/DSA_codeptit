@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int a[10][10], c[10], c1[20], c2[20], ans;
+
+void Try(int i, int sum) {
+	for(int j = 1; j <= 8; ++j) {
+		if(!c[j] && !c1[i + j - 1] && !c2[8 - i + j]) {
+			c[j] = 1; c1[i + j - 1] = 1; c2[8 - i + j] = 1;
+			if(i == 8) ans = max(ans, sum + a[i][j]);
+			else Try(i + 1, sum + a[i][j]);
+			c[j] = 0; c1[i + j - 1] = 0; c2[8 - i + j] = 0;
+		}
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		ans = 0;
+		for(int i = 1; i <= 8; ++i) {
+			for(int j = 1; j <= 8; ++j) {
+				cin >> a[i][j];
+			}
+		}
+		Try(1, 0);
+		cout << ans << endl;
+	}
+}
