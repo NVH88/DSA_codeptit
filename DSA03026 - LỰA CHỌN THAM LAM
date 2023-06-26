@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool check(int s, int d) {
+	if(s > 9 * d) return false;
+	if(s < 1) return false;
+	return true;
+}
+
+string minn(int s, int d) {
+	string res = "";
+	while(s >= 10 && d--) {
+		res += "9";
+		s -= 9;
+	}
+	if(d == 1) res = to_string(s) + res;
+	else {
+		res = to_string(s - 1) + res;
+		--d;
+		while(d > 1) {
+			--d;
+			res = "0" + res;
+		}
+		res = "1" + res;
+	}
+	return res;
+}
+
+string maxx(int s, int d) {
+	string res = "";
+	while(s >= 10 && d--) {
+		res += "9";
+		s -= 9;
+	}
+	res += to_string(s); --d;
+	for(int i = 1; i <= d; i++) res += "0";
+	return res;
+}
+
+int main() {
+	int s, d; cin >> s >> d;
+	if(s == 1 && d == 0) {
+		cout << "0 0";
+	}
+	else {
+		if(!check(d, s)) cout << -1 << " " << -1;
+		else {
+			cout << minn(d, s) << " " << maxx(d, s);
+		}
+	}
+}
