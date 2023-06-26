@@ -1,0 +1,34 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, m, a[25][25], ans;
+vector<int> ke[25];
+
+void DFS(int i, int cnt) {
+	for(int j : ke[i]) {
+		if(a[i][j]) {
+			a[i][j] = 0; a[j][i] = 0;
+			ans = max(ans, cnt + 1);
+			DFS(j, cnt + 1);
+			a[i][j] = 1; a[j][i] = 1;
+		}
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		ans = 0;
+		for(int i = 0; i <= 20; ++i) ke[i].clear();
+		memset(a, 0, sizeof(a));
+		cin >> n >> m;
+		for(int i = 1; i <= m; ++i) {
+			int x, y; cin >> x >> y;
+			a[x][y] = 1; a[y][x] = 1;
+			ke[x].push_back(y);
+			ke[y].push_back(x);
+		}
+		for(int i = 0; i < n; ++i) DFS(i, 0);
+		cout << ans << endl;
+	}
+}
