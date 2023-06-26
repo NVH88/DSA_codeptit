@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, k, a[20];
+
+void Try(int i) {
+	for(int j = a[i - 1] + 1; j <= n; j++) {
+		a[i] = j;
+		if(i == k) {
+			for(int idx = 1; idx <= k; ++idx) cout << (char)(a[idx] + 'A' - 1);
+			cout << endl;
+		}
+		else Try(i + 1);
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cin >> n >> k;
+		Try(1);
+	}
+}
