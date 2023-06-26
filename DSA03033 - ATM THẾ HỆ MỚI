@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		ll w, c; cin >> w >> c;
+		if(w % 1000) cout << 0 << endl;
+		else {
+			w /= 1000;
+			ll n = 0, sc = 1;
+			while(w && c--) {
+				ll tmp = w % 10; w /= 10;
+				if(tmp == 1 || tmp == 2 || tmp == 3 || tmp == 5) ++n;
+				else if(tmp == 4 || tmp == 6) {
+					n += 2;
+					sc *= 2;
+				}
+				else if(tmp == 7 || tmp == 8) n += 2;
+				else if(tmp == 9) {
+					n += 3;
+					sc *= 3;
+				}
+			}
+			if(w) {
+				n += w / 5;
+				if(w % 5 == 4) n += 2;
+				else if(w % 5) ++n;
+				if((w % 5 == 1 && w > 1) || w == 4) sc *= 2;
+				else if(w % 5 == 4 && w > 4) sc *= 3;  
+			}
+			cout << n << " " << sc << endl;
+		}
+	}
+}
