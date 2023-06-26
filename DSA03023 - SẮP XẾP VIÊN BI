@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int solve(string s) {
+	int t = 0, x = 0, d = 0, cnt = 0;
+	int tx = 0, td = 0, xt = 0, xd = 0, dt = 0, dx = 0;
+	for(int i = 0; i < s.length(); i++) {
+		if(s[i] == 'T') ++t;
+		if(s[i] == 'X') ++x;
+		if(s[i] == 'D') ++d;
+	}
+	for(int i = 0; i < x; i++) {
+		if(s[i] == 'T') ++xt;
+		if(s[i] == 'D') ++xd;
+	}
+	for(int i = x; i < x + t; i++) {
+		if(s[i] == 'X') ++tx;
+		if(s[i] == 'D') ++td;
+	}
+	for(int i = x + t; i < s.length(); i++) {
+		if(s[i] == 'T') ++dt;
+		if(s[i] == 'X') ++dx;
+	}
+	int tmp;
+	tmp = min(xt, tx); cnt += tmp; xt -= tmp; tx -= tmp;
+	tmp = min(xd, dx); cnt += tmp; xd -= tmp; dx -= tmp;
+	tmp = min(dt, td); cnt += tmp; dt -= tmp; td -= tmp;
+	cnt += 2 * (tx + td + xt + xd + dt + dx) / 3;
+	return cnt;
+}
+
+int main() {
+	int n; cin >> n;
+	string s; cin >> s;
+	cout << solve(s);
+}
