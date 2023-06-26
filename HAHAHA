@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n;
+char a[20];
+
+void Try(int i) {
+	if(i == n - 1) {
+		cout << "H";
+		for(int j = 1; j <= n - 2; j++) cout << a[j];
+		cout << "A" << endl;
+		return;
+	}
+	a[i] = 'A';
+	Try(i + 1);
+	if(a[i - 1] == 'A') {
+		a[i] = 'H';
+		Try(i + 1);
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cin >> n;
+		if(n == 2) cout << "HA" << endl;
+		else Try(1);
+	}
+}
