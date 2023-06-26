@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t;
+	cin >> t;
+	while(t--) {
+		int n;
+		cin >> n;
+		int a[n];
+		for(int i = 0; i < n; i++) cin >> a[i];
+		vector<string> v;
+		for(int i = 0; i < n - 1; i++) {
+			bool check = true;
+			for(int j = i + 1; j < n; j++) {
+				if(a[i] > a[j]) {
+					check = false;
+					swap(a[i], a[j]);
+				}
+			}
+			if(check) break;
+			string s = "";
+			s += "Buoc " + to_string(i + 1) + ": ";
+			for(int k = 0; k < n; k++) s += to_string(a[k]) + " ";
+			v.push_back(s);
+		}	
+		reverse(v.begin(), v.end());
+		for(string i : v) cout << i << endl;
+	}
+}
+
