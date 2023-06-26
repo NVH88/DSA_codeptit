@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, k, a[100], x[100], cnt;
+
+void Try(int i, int s) {
+	for(int j = 0; j <= 1; j++) {
+		x[i] = j;
+		if(x[i]) s += a[i];
+		if(s == k) {
+			++cnt;
+			for(int idx = 1; idx <= n; idx++) {
+				if(x[idx]) cout << a[idx] << " ";
+			}
+			cout << endl;
+		}
+		else if(i < n) Try(i + 1, s);
+		if(x[i]) s -= a[i];
+		x[i] = 0;
+	}
+}
+
+int main() {
+	cin >> n >> k;
+	for(int i = 1; i <= n; i++) cin >> a[i];
+	Try(1, 0);
+	cout << cnt;
+}
