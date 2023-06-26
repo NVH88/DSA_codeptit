@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, s, a[100], ok;
+
+void Try(int i, int sum, string x) {
+	for(int j = i; j <= n; ++j) {
+		if(sum + a[j] == s) {
+			ok = 1;
+			cout << "[" << x << a[j] << "]";
+		}
+		if(sum + a[j] < s) {
+			Try(j, sum + a[j], x + to_string(a[j]) + " ");
+		}
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		ok = 0;
+		cin >> n >> s;
+		for(int i = 1; i <= n; ++i) cin >> a[i];
+		sort(a + 1, a + n + 1);
+		Try(1, 0, "");
+		if(!ok) cout << -1;
+		cout << endl;
+	}
+}
