@@ -1,0 +1,27 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int n;
+	cin >> n;
+	int a[n];
+	for(int i = 0; i < n; i++) cin >> a[i];
+	vector<string> v;
+	int cnt = 1;
+	for(int i = 0; i < n - 1; i++) {
+		int idx = i;
+		for(int j = i + 1; j < n; j++) {
+			if(a[j] < a[idx]) {
+				idx = j;
+			}
+		}
+		swap(a[i], a[idx]);
+		string s = "";
+		s += "Buoc " + to_string(i + 1) + ": ";
+		for(int k = 0; k < n; k++) s += to_string(a[k]) + " ";
+		v.push_back(s);
+	}
+	reverse(v.begin(), v.end());
+	for(string i : v) cout << i << endl;
+}
+
