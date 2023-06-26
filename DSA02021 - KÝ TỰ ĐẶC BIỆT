@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll unsigned long long
+
+string s; 
+ll n, len; 
+
+char Find(ll x, ll f) {
+	if(f == 1) return s[x - 1];
+	ll i = len / 2; len /= 2;
+	if(x <= i) return Find(x, f - 1);
+	if(x == i + 1) return Find(x - 1, f - 1);
+	return Find(x - i - 1, f - 1);
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cin >> s >> n;
+		len = s.length();
+		ll f = 1;
+		while(len < n) len *= 2, ++f;
+		cout << Find(n, f) << endl;
+	}
+}
