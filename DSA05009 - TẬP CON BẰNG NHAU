@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, sum, a[105], ok;
+
+void Try(int i, int s) {
+	for(int j = i; j < n; ++j) {
+		if(ok) return;
+		if(s + a[j] <= sum) {
+			if(s + a[j] == sum) ok = 1;
+			else Try(j + 1, s + a[j]);
+		}
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		sum = 0; ok = 0;
+		cin >> n;
+		for(int i = 0; i < n; ++i) {
+			cin >> a[i];
+			sum += a[i];
+		}
+		if(sum % 2) cout << "NO" << endl;
+		else {
+			Try(0, 0);
+			sum /= 2;
+			if(ok) cout << "YES" << endl;
+			else cout << "NO" << endl;
+		}
+	}
+}
