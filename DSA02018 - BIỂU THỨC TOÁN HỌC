@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int a[10], used[10], x[10], ok;
+char sign[3] = {'+', '-', '*'};
+char vt[5];
+
+int calc(int x, int y, char c) {
+	if(x == -1) return y;
+	if(c == '+') return x + y;
+	if(c == '-') return x - y;
+	return x * y;
+}
+
+void Try(int i, int kq) {
+	for(int j = 1; j <= 5; ++j) {
+		if(ok) return;
+		if(!used[j]) {
+			used[j] = 1;
+			x[i] = a[j];
+			for(int k = 0; k < 3; ++k) {
+				if(i == 5) {
+					if(calc(kq, x[5], sign[k]) == 23) ok = 1;
+				}
+				else Try(i + 1, calc(kq, x[i], sign[k]));
+			}
+			used[j] = 0;
+		}
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		ok = 0;
+		for(int i = 1; i <= 5; ++i) {
+			cin >> a[i];
+		}
+		Try(1, -1);
+		if(ok) cout << "YES" << endl;
+		else cout << "NO" << endl;
+	}
+}
