@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, k, a[20], x[20];
+
+void Try(int i) {
+	for(int j = a[i - 1] + 1; j <= n; j++) {
+		a[i] = j;
+		if(i == k) {
+			for(int idx = 1; idx <= k; idx++) {
+				cout << x[a[idx]] << " ";
+			}
+			cout << endl;
+		}
+		else Try(i + 1);
+	}
+}
+
+int main() {
+	cin >> n >> k;
+	set<int> se;
+	for(int i = 1; i <= n; i++) {
+		int x; cin >> x;
+		se.insert(x);
+	}
+	n = se.size();
+	int i = 1;
+	for(int j : se) {
+		x[i++] = j;
+	}
+	Try(1);
+}
