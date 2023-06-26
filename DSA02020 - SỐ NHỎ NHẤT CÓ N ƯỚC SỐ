@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+ll prime[] = {2, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31}, ans;
+int n;
+
+void Try(int i, ll a, ll b) {
+    if(b > n) return;
+    if(b == n) ans = min(ans, a);
+    ll j = 1;
+    while(a * prime[i] <= ans) {
+        a *= prime[i];
+        Try(i + 1, a, b * (j + 1));
+        ++j;
+    }
+}
+
+int main() {
+    int t;
+    cin >> t;
+    while(t--) {
+        cin >> n;
+        ans = 1e18;
+        Try(1, 1, 1);
+        cout << ans << endl;
+    }
+    return 0;
+}
