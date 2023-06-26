@@ -1,0 +1,26 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, c[15], c1[30], c2[30], cnt;
+
+void Try(int i) {
+	for(int j = 1; j <= n; ++j) {
+		if(!c[j] && !c1[n - i + j] && !c2[i + j - 1]) {
+			c[j] = 1; c1[n - i + j] = 1; c2[i + j - 1] = 1;
+			if(i == n) ++cnt;
+			else Try(i + 1);
+			c[j] = 0; c1[n - i + j] = 0; c2[i + j - 1] = 0;
+		}
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cin >> n;
+		cnt = 0;
+		Try(1);
+		cout << cnt << endl;
+	}
+}
+
