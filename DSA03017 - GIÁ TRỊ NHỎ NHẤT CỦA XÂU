@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+ll solve(ll k, string s) {
+	ll kt[300] = {0};
+	for(int i = 0; i < s.length(); i++) {
+		kt[s[i]]++;
+	}
+	priority_queue<ll> q;
+	for(int i = 0; i < 300; i++) {
+		if(kt[i] != 0) q.push(kt[i]);
+	}
+	while(!q.empty() && k--) {
+		ll top = q.top(); q.pop();
+		top--;
+		if(top != 0) q.push(top);
+	}
+	ll res = 0;
+	while(!q.empty()) {
+		res += q.top() * q.top();
+		q.pop();
+	}
+	return res;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		ll k; string s; cin >> k >> s;
+		cout << solve(k, s) << endl;
+	}
+}
