@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int n; cin >> n;
+		vector<int> v;
+		vector<string> vt;
+		v.push_back(n);
+		vt.push_back("(" + to_string(n) + ")");
+		while(v[0] != 1) {
+			int i = v.size() - 1, cnt = 0;
+			while(v[i] == 1) --i, ++cnt, v.pop_back();
+			--v[i]; ++cnt;
+			int p = cnt / v[i], q = cnt % v[i];
+			while(p--) v.push_back(v[i]);
+			if(q) v.push_back(q);
+			string s = "(";
+			for(int i = 0; i < v.size() - 1; ++i) s += to_string(v[i]) + " ";
+			s += to_string(v[v.size() - 1]) + ")";
+			vt.push_back(s);
+		}
+		cout << vt.size() << endl;
+		for(string i : vt) cout << i << " ";
+		cout << endl;
+	}
+}
