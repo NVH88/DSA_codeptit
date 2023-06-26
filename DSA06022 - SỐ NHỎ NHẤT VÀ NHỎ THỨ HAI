@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+int a[10000001];
+
+int main() {
+	int t;
+	cin >> t;
+	while(t--) {
+		int n; cin >> n;
+		set<int> s;
+		for(int i = 1; i <= n; i++) {
+			int a; cin >> a;
+			s.insert(a);
+		}
+		auto it = s.begin();
+		if(s.size() == 1) cout << -1 << endl;
+		else {
+			cout << *it << " ";
+			++it;
+			cout << *it << endl;
+		}
+	}
+}
