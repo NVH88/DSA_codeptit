@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int x[205], a[205], n, p, s, k, z;
+vector<string> v;
+
+void sang() {
+	for(int i = 2; i <= 200; ++i) x[i] = 1;
+	for(int i = 2; i <= sqrt(202); ++i) {
+		if(x[i]) for(int j = i * i; j <= 202; j += i) x[j] = 0;
+	}
+	n = 1;
+	for(int j = 2; j <= 200; ++j) {
+		if(x[j]) a[n++] = j;
+	}
+	--n;
+}
+
+void Try(int i, int sum, int cnt, string st) {
+	for(int j = max(z, i); j <= n; ++j) {
+		if(sum + a[j] <= s) {
+			if(sum + a[j] == s) {
+				if(cnt + 1 == k) v.push_back(st + to_string(a[j]));
+			}
+			else Try(j + 1, sum + a[j], cnt + 1, st + to_string(a[j]) + " ");
+		}
+	}
+}
+
+int main() {
+	sang();
+	int t; cin >> t;
+	while(t--) {
+		v.clear();
+		cin >> k >> p >> s;
+		for(int i = 1; i <= n; ++i) {
+			if(a[i] > p) {
+				z = i; 
+				break;
+			}
+		}
+		Try(1, 0, 0, "");
+		cout << v.size() << endl;
+		for(string i : v) cout << i << endl;
+	}
+}
