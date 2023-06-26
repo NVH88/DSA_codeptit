@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n;
+vector<string> v;
+bool ok;
+
+bool check(string s) {
+	int a = stoi(s.substr(0, 2)), b = stoi(s.substr(5, 2)), check;
+    if (s[3] == '+') check = a + b;
+    else check = a - b;
+    string tmp = to_string(check);
+    string c = s.substr(10, 2);
+    return tmp == c;
+}
+
+void Try(string s, int i) {
+	if(ok) return;
+	if(i == s.size()) {
+		if(check(s)) {
+			cout << s << endl;
+			ok = true;
+		}
+		return;
+	}
+	if(s[i] != '?') {
+		if(!ok) Try(s, i + 1);
+		return;
+	}
+	if(i == 3) {
+		s[3] = '+';
+		Try(s, i + 1);
+		s[3] = '-';
+		Try(s, i + 1);
+	}
+	else if(i == 0 || i == 5 || i == 10) {
+		for(char j = '1'; j <= '9'; j++) {
+			s[i] = j;
+			if(!ok) Try(s, i + 1);
+		}
+	}
+	else {
+		for(char j = '0'; j <= '9'; j++) {
+			s[i] = j;
+			if(!ok) Try(s, i + 1);
+		}
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	cin.ignore();
+	while(t--) {
+		ok = false;
+		string s; getline(cin, s);
+		if(s[3] == '*' || s[3] == '/') {
+			cout << "WRONG PROBLEM!" << endl;
+			continue;
+		}
+		Try(s, 0);
+		if(!ok) cout << "WRONG PROBLEM!" << endl;
+	}
+}
