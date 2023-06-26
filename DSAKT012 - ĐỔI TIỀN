@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+ll n, s, a[40], x[40], ok, k;
+
+void Try(ll i, ll sum) {
+	for(ll j = a[i - 1] + 1; j <= n - k + i; ++j) {
+		if(ok) return;
+		a[i] = j;
+		if(i == k) {
+			if(sum + x[j] == s) {
+				cout << k;
+				ok = 1;
+			}
+		}
+		else Try(i + 1, sum + x[j]);
+	}
+}
+
+int main() {
+	cin >> n >> s;
+	for(ll i = 1; i <= n; ++i) cin >> x[i];
+	for(k = 1; k <= n; ++k) {
+		Try(1, 0);
+	}
+	if(!ok) cout << -1;
+}
