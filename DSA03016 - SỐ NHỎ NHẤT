@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool check(int s, int d) {
+	if(s > 9 * d) return false;
+	return true;
+}
+
+string solve(int s, int d) {
+	string res = "";
+	while(s >= 10 && d--) {
+		res += "9";
+		s -= 9;
+	}
+	if(d == 1) res = to_string(s) + res;
+	else {
+		res = to_string(s - 1) + res;
+		--d;
+		while(d > 1) {
+			--d;
+			res = "0" + res;
+		}
+		res = "1" + res;
+	}
+	return res;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int s, d; cin >> s >> d;
+		if(!check(s, d)) cout << -1 << endl;
+		else cout << solve(s, d) << endl;
+	}
+}
