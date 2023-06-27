@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+const int M = 1e9 + 7;
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int n, s; cin >> n >> s;
+		int a[n], dp[s + 1];
+		memset(dp, 0, sizeof(dp));
+		for(int &i : a) cin >> i;
+		dp[0] = 1;
+		for(int i = 1; i <= s; i++) {
+			for(int j = 0; j < n; j++) {
+				if(i >= a[j]) {
+					dp[i] += dp[i - a[j]];
+					dp[i] %= M;
+				}
+			}
+		}
+		cout << dp[s] << endl;
+	}
+}
