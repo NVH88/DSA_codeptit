@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct node {
+	char data;
+	node *l, *r;
+	node(char s) {
+		data = s;
+		l = r = NULL;
+	}
+};
+
+void in(node *root) {
+	if(root == NULL) return;
+	in(root->l);
+	cout << root->data;
+	in(root->r);
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		string s; cin >> s;
+		stack<node *> st;
+		node *root;
+		for(char i : s) {
+			if(isalpha(i)) {
+				st.push(new node(i));
+			}
+			else {
+				root = new node(i);
+				root->r = st.top(); st.pop();
+				root->l = st.top(); st.pop();
+				st.push(root);
+			}
+		}
+		in(st.top());
+		cout << endl;
+	}
+}
