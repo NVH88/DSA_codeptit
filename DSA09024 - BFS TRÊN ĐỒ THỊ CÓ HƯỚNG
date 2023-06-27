@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+vector<int> ke[1005];
+bool visited[1005];
+
+void BFS(int u) {
+	queue<int> q;
+	q.push(u);
+	while(!q.empty()) {
+		int t = q.front(); q.pop();
+		if(!visited[t]) cout << t << " ";
+		visited[t] = true;
+		for(int i : ke[t]) {
+			if(!visited[i]) {
+				q.push(i);
+			}
+		}
+	}
+}
+
+int main() {
+	int t;
+	cin >> t;
+	while(t--) {
+		int n, m, u;
+		cin >> n >> m >> u;
+		memset(visited, false, sizeof(visited));
+		for(int i = 0; i < 1005; i++) ke[i].clear();
+		for(int i = 1; i <= m; i++) {
+			int x, y; cin >> x >> y;
+			ke[x].push_back(y);
+		}
+		for(int i = 1; i <= n; i++) sort(ke[i].begin(), ke[i].end());
+		BFS(u);
+		cout << endl;
+	}
+}
