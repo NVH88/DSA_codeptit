@@ -1,0 +1,21 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+const int mod = 1e9 + 7;
+
+ll poww(ll a, ll b) {
+	if(b == 0) return 1;
+	if(b % 2 == 0) return (poww(a, b / 2) * poww(a, b / 2)) % mod;
+	else return (((poww(a, b / 2) * poww(a, b / 2)) % mod) * a) % mod;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		string s; cin >> s;
+		ll a = stoll(s);
+		reverse(s.begin(), s.end());
+		ll b = stoll(s);
+		cout << poww(a, b) << endl;
+	}
+}
