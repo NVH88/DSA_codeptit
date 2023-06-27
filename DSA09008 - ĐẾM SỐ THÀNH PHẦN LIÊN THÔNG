@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int par[1005], sz[1005];
+
+int find(int u) {
+	if(u == par[u]) return u;
+	return find(par[u]);
+}
+
+void uni(int u, int v) {
+	u = find(u); v = find(v);
+	if(u != v) {
+		if(sz[u] < sz[v]) swap(u, v);
+		sz[u] += sz[v];
+		par[v] = u;
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int n, m; cin >> n >> m;
+		for(int i = 1; i <= n; ++i) par[i] = i, sz[i] = 1;
+		while(m--) {
+			int u, v; cin >> u >> v;
+			uni(u, v);
+		}
+		set<int> se;
+		for(int i = 1; i <= n; ++i) se.insert(find(i));
+		cout << se.size() << endl;
+	}
+}
