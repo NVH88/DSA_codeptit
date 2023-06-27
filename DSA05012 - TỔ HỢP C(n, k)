@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+ll C[1005][1005];
+const int M = 1e9 + 7;
+
+void solve() {
+	for(int n = 1; n <= 1000; n++) C[n][1] = n;
+	for(int n = 2; n <= 1000; n++) {
+		for(int k = 2; k <= n; k++) {
+			C[n][k] = C[n - 1][k] + C[n - 1][k - 1];
+			C[n][k] %= M;
+		}
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	solve();
+	while(t--) {
+		int n, k; cin >> n >> k;
+		cout << C[n][k] << endl;
+	}
+}
