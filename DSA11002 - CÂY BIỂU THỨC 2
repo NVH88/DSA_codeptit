@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct node {
+	string data;
+	node *l, *r;
+	node(string x) {
+		data = x;
+		l = r = NULL;
+	}
+};
+
+bool check(string s) {
+	return (s == "+" || s == "-" || s == "*" || s == "/");
+}
+
+int calc(node *root) {
+	if(!check(root->data)) return stoi(root->data);
+	if(root->data == "+") return calc(root->l) + calc(root->r);
+	if(root->data == "-") return calc(root->l) - calc(root->r);
+	if(root->data == "*") return calc(root->l) * calc(root->r);
+	return calc(root->l) / calc(root->r);
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int n; cin >> n;
+		string s[n];
+		for(int i = 0; i < n; ++i) cin >> s[i];
+		queue<node *> q;
+		node *root = new node(s[0]);
+		q.push(root);
+		for(int i = 1; i < n; i += 2) {
+			node *f = q.front(); q.pop();
+			f->l = new node(s[i]); 
+			f->r = new node(s[i + 1]);
+			if(check(s[i])) q.push(f->l);
+			if(check(s[i + 1])) q.push(f->r);
+		}
+		cout << calc(root) << endl;
+	}
+}
+
