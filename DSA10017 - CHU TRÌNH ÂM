@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct edge {
+	int x, y, w;
+};
+
+int n, m, d[1005];
+vector<edge> e;
+
+bool bell(int u) {
+	d[u] = 0;
+	for(int k = 1; k < n; ++k) {
+		for(edge i : e) {
+			d[i.y] = min(d[i.y], d[i.x] + i.w);
+		}
+	}
+	for(edge i : e) {
+		if(d[i.y] > d[i.x] + i.w) return true;
+	}
+	return false;
+}
+
+bool check() {
+	for(int i = 1; i <= n; ++i) {
+		if(d[i] == 1e9) {
+			if(bell(i)) return true;
+		}
+	}
+	return false;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		e.clear(); cin >> n >> m;
+		for(int i = 1; i <= n; ++i) d[i] = 1e9;
+		for(int i = 0; i < m; ++i) {
+			int a, b, c; cin >> a >> b >> c;
+			e.push_back((edge){a, b, c});
+		}
+		cout << check() << endl;
+	}
+}
