@@ -1,0 +1,37 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> ke[1005];
+int n, m, used[1005], par[1005];
+
+bool dfs(int u) {
+	used[u] = 1;
+	for(int i : ke[u]) {
+		if(!used[i]) {
+			par[i] = u; 
+			if(dfs(i)) return true;
+		}
+		else if(i != par[u]) return true;
+	}
+	return false;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cin >> n >> m;
+		for(int i = 1; i <= n; ++i) ke[i].clear();
+		memset(used, 0, sizeof(used));
+		for(int i = 0; i < m; ++i) {
+			int a, b; cin >> a >> b;
+			ke[a].push_back(b); ke[b].push_back(a);
+		}
+		int ok = 0;
+		for(int i = 1; i <= n; ++i) {
+			if(!used[i]) {
+				if(dfs(i)) { cout << "YES" << endl; ok = 1; break;}
+			}
+		}
+		if(!ok) cout << "NO" << endl;
+	}
+}
