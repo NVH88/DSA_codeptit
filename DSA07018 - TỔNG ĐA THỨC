@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool laSo(char c) {
+	return c >= '0' && c <= '9';
+}
+
+int bac(string s) {
+	string ans = "";
+	int len = s.length() - 1;
+	while(laSo(s[len])) ans = string(1, s[len]) + ans, --len;
+	return stoi(ans);
+}
+
+int heSo(string s) {
+	string ans = "";
+	int i = 0;
+	while(laSo(s[i])) ans += string(1, s[i]), ++i;
+	return stoi(ans);
+}
+
+int main() {
+	int t; cin >> t;
+	cin.ignore();
+	while(t--) {
+		string a, b, tmp; getline(cin, a); getline(cin, b);
+		int x[10005] = {0};
+		a += " " + b;
+		stringstream ss(a);
+		while(ss >> tmp) {
+			if(tmp == "+") continue;
+			x[bac(tmp)] += heSo(tmp);
+		}
+		string ans = "";
+		for(int i = 10000; i >= 0; --i) {
+			if(x[i]) {
+				ans += to_string(x[i]) + "*x^" + to_string(i) + " + ";
+			}
+		}
+		ans.pop_back();
+		ans.pop_back();
+		ans.pop_back();
+		cout << ans << endl;
+	}
+}
