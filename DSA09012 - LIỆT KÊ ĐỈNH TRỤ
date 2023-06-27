@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, m, cnt, low[1005], disc[1005], used[1005], tru[1005]; 
+vector<int> ke[1005];
+
+void dfs(int u, int par) {
+	used[u] = 1;
+	int child = 0;
+	disc[u] = low[u] = ++cnt;
+	for(int i : ke[u]) {
+		if(i == par) continue;
+		if(!used[i]) {
+			++child;
+			dfs(i, u);
+			low[u] = min(low[u], low[i]);
+			if(par != -1 && low[i] >= disc[u]) tru[u] = 1;
+		}
+		else low[u] = min(low[u], disc[i]);
+	}
+	if(par == -1 && child > 1) tru[u] = 1;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		memset(used, 0, sizeof(used));
+		memset(tru, 0, sizeof(tru));
+		cin >> n >> m;
+		for(int i = 1; i <= n; ++i) ke[i].clear();
+		for(int i = 0; i < m; ++i) {
+			int a, b; cin >> a >> b;
+			ke[a].push_back(b); ke[b].push_back(a);
+		}
+		for(int i = 1; i <= n; ++i) {
+			if(!used[i]) dfs(i, -1);
+		}
+		for(int i = 1; i <= n; ++i) {
+			if(tru[i]) cout << i << " ";
+		}
+		cout << endl;
+	}
+}
