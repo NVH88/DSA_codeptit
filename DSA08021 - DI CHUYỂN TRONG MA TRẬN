@@ -1,0 +1,37 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int a[1005][1005], cnt[1005][1005];
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int n, m; cin >> n >> m;
+		memset(cnt, 0, sizeof(cnt));
+		for(int i = 1; i <= n; ++i) {
+			for(int j = 1; j <= m; ++j) {
+				cin >> a[i][j];
+			}
+		}
+		cnt[1][1] = 1;
+		queue<pair<int, int>> q;
+		q.push({1, 1});
+		while(q.size()) {
+			pair<int, int> p = q.front(); q.pop();
+			int x = p.first, y = p.second;
+			if(x == n && y == m) {
+				cout << cnt[n][m] - 1 << endl;
+				break;
+			}
+			if(!cnt[x + a[x][y]][y] && x + a[x][y] > 0 && x + a[x][y] <= n) {
+				q.push({x + a[x][y], y}); 
+				cnt[x + a[x][y]][y] = cnt[x][y] + 1;
+			}
+			if(!cnt[x][y + a[x][y]] && y + a[x][y] > 0 && y + a[x][y] <= m) {
+				q.push({x, y + a[x][y]});
+				cnt[x][y + a[x][y]] = cnt[x][y] + 1;
+			}
+		}
+		if(!cnt[n][m]) cout << -1 << endl;
+	}
+}
