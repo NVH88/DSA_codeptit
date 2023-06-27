@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int n; cin >> n;
+		int ans = 0, sau[n + 1] = {0}, truoc[n + 1] = {0};
+		for(int i = 0; i < n - 1; ++i) {
+			int a, b; cin >> a >> b;
+			sau[a] = b; truoc[b] = a;
+		}
+		for(int i = 1; i <= n; ++i) {
+			if(!sau[i]) {
+				int j = i;
+				vector<int> v; v.push_back(i);
+				while(j != 1) {
+					j = truoc[j];
+					v.push_back(j);
+				}
+				reverse(v.begin(), v.end());
+				for(int j : v) cout << j << " ";
+				cout << endl;
+			}
+		}
+	}
+}
+
