@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct node {
+	int data;
+	node *l, *r;
+	node(int x) {
+		data = x;
+		l = r = NULL;
+	}
+};
+
+void insert(node *root, int u, int v, char c) {
+	if(root == NULL) return;
+	if(root->data == u) {
+		if(c == 'L') root->l = new node(v);
+		else root->r = new node(v);
+		return;
+	}
+	insert(root->l, u, v, c);
+	insert(root->r, u, v, c);
+}
+
+void duyet(node *root) {
+	stack<node*> st1, st2;
+	st1.push(root);
+	while(st1.size() || st2.size()) {
+		if(st1.size()) while(st1.size()) {
+			node *n = st1.top(); st1.pop();
+			cout << n->data << " ";
+			if(n->r != NULL) st2.push(n->r); 
+			if(n->l != NULL) st2.push(n->l); 
+		}
+		else while(st2.size()) {
+			node *n = st2.top(); st2.pop();
+			cout << n->data << " ";
+			if(n->l != NULL) st1.push(n->l); 
+			if(n->r != NULL) st1.push(n->r); 
+		}	
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int n; cin >> n;
+		node *root = NULL;
+		for(int i = 0; i < n; ++i) {
+			int a, b; char c; cin >> a >> b >> c;
+			if(root == NULL) root = new node(a);
+			insert(root, a, b, c);
+		}
+		duyet(root); cout << endl;
+	}
+}
