@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> ke[100005];
+bool visited[100005];
+int n, m, cnt;
+
+void ktao() {
+	cin >> n >> m;
+	for(int i = 1; i <= n; i++) ke[i].clear();
+	memset(visited, false, sizeof(visited));
+	for(int i = 1; i <= m; i++) {
+		int x, y; cin >> x >> y;
+		ke[x].push_back(y);
+		ke[y].push_back(x);
+	}
+}
+
+void DFS(int u) {
+	++cnt;
+	visited[u] = true;
+	for(int i : ke[u]) {
+		if(!visited[i]) {
+			DFS(i);
+		}
+	}
+}
+
+bool check() {
+	for(int i = 1; i <= n; i++) {
+		if(!visited[i]) {
+			cnt = 0;
+			DFS(i);
+			if(cnt != ke[i].size() + 1) return false;
+			for(int j : ke[i]) {
+				if(ke[j].size() + 1 != cnt) return false;
+			}
+		}
+	}
+	return true;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		ktao();
+		if(check()) cout << "YES" << endl;
+		else cout << "NO" << endl;
+	}
+}
