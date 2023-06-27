@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int dx[] = {-1, +0, +1, -1, +1, -1, +0, +1};
+int dy[] = {-1, -1, -1, +0, +0, +1, +1, +1};
+int n, m, x[105][105], ans;
+
+void dfs(int u, int v) {
+	x[u][v] = 0;
+	for(int k = 0; k < 8; ++k) {
+		int i = u + dy[k], j = v + dx[k];
+		if(i >= 0 && i < n && j >= 0 && j < m && x[i][j]) dfs(i, j);
+	}
+}
+
+int main() {
+	cin >> n >> m;
+	for(int i = 0; i < n; ++i) {
+		for(int j = 0; j < m; ++j) {
+			char c; cin >> c;
+			if(c == 'W') x[i][j] = 1;
+		}
+	}
+	for(int i = 0; i < n; ++i) {
+		for(int j = 0; j < m; ++j) {
+			if(x[i][j]) {
+				++ans;
+				dfs(i, j);
+			}
+		}
+	}
+	cout << ans;
+}
