@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+int calc(ll a[], ll n, ll idx, ll i) {
+	if(i % 2) return 1;
+	if(i == a[idx - 1] + 1) return n % 2;
+	if(i <= a[idx - 1]) return calc(a, n / 2, idx - 1, i);
+	return calc(a, n / 2, idx - 1, i - a[idx - 1] - 1);
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		ll n, l, r; cin >> n >> l >> r;
+		ll a[55];
+		a[1] = 1;
+		ll tmp = n / 2, idx = 2;
+		while(tmp) {
+			a[idx] = a[idx - 1] * 2 + 1;
+			++idx;
+			tmp /= 2;
+		}
+		--idx;
+		ll res = 0;
+		for(ll i = l; i <= r; i++) {
+			res += calc(a, n, idx, i);
+		}
+		cout << res << endl;
+	}
+}
