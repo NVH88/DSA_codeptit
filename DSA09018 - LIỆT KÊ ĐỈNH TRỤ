@@ -1,0 +1,101 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> ke[1005];
+int n, m, used[1005];
+
+void dfs(int u) {
+	used[u] = 1;
+	for(int i : ke[u]) if(!used[i]) dfs(i);
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cin >> n >> m;
+		for(int i = 1; i <= n; ++i) ke[i].clear();
+		for(int i = 0; i < m; ++i) {
+			int a, b; cin >> a >> b;
+			ke[a].push_back(b); ke[b].push_back(a);
+		}
+		int ans = 0;
+		memset(used, 0, sizeof(used));
+		used[1] = 1;
+		dfs(2);
+		for(int i = 1; i <= n; ++i) {
+			if(!used[i]) {
+				cout << 1 << " ";
+				break;
+			}
+		}
+		for(int i = 2; i <= n; ++i) {
+			memset(used, 0, sizeof(used));
+			used[i] = 1;
+			dfs(1);
+			for(int j = 1; j <= n; ++j) {
+				if(!used[j]) {
+					cout << i << " ";
+					break;
+				}
+			}
+		}
+		cout << endl;
+	}
+}
+
+Dùng Tarjan
+
+#include<bits/stdc++.h>
+using namespace std;
+
+bool visited[1005];
+vector<int> ke[1005];
+bool AP[1005];
+int n, m, timer;
+int disc[1005], low[1005];
+
+void ktao() {
+	memset(AP, false, sizeof(AP));
+	for(int i = 1; i <= 1000; i++) ke[i].clear();
+	timer = 0;
+	memset(visited, false, sizeof(visited));
+	cin >> n >> m;
+	for(int i = 1; i <= m; i++) {
+		int x, y; cin >> x >> y;
+		ke[x].push_back(y);
+		ke[y].push_back(x);
+	}
+}
+
+void DFS(int u, int par) {
+	int child = 0;
+	visited[u] = true;
+	disc[u] = low[u] = ++timer;
+	for(int i : ke[u]) {
+		if(i == par) continue;
+		if(!visited[i]) {
+			++child;
+			DFS(i, u);
+			low[u] = min(low[u], low[i]);
+			if(disc[u] < low[i]) {
+				AP[u] = true;
+			}
+		}
+		else {
+			low[u] = min(low[u], disc[i]);
+		}
+	}
+	if(child > 1 && par == -1) AP[u] = true;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		ktao();
+		DFS(1, -1);
+		for(int i = 1; i <= n; i++) {
+			if(AP[i]) cout << i << " ";
+		}
+		cout << endl;
+	}
+}
