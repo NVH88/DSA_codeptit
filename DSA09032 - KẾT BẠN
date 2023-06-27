@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int par[100005], sz[100005];
+
+int find(int u) {
+	if(u == par[u]) return u;
+	return find(par[u]);
+}
+
+void uni(int u, int v) {
+	u = find(u); v = find(v);
+	if(u != v) {
+		if(sz[u] < sz[v]) swap(u, v);
+		par[v] = u;
+		sz[u] += sz[v];
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int n, m; cin >> n >> m;
+		for(int i = 1; i <= n; ++i) par[i] = i, sz[i] = 1;
+		while(m--) {
+			int a, b; cin >> a >> b;
+			uni(a, b);
+		}
+		cout << *max_element(sz + 1, sz + 1 + n) << endl;
+	}
+}
