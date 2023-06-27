@@ -1,0 +1,65 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, m, k;
+vector<int> ke[15], kke[15];
+bool to[15];
+
+bool Find(vector<int> v, int x) {
+	for(int i : v) {
+		if(i == x) return true;
+	}
+	return false;
+}
+
+void ktao() {
+	memset(to, false, sizeof(to));
+	cin >> n >> m >> k;
+	for(int i = 1; i <= n; i++) {
+		ke[i].clear();
+		kke[i].clear();
+	}
+	for(int i = 1; i <= m; i++) {
+		int x, y; cin >> x >> y;
+		ke[x].push_back(y);
+		ke[y].push_back(x);
+	}
+	for(int i = 1; i <= n; i++) {
+		kke[i].push_back(i);
+		for(int j = 1; j <= n; j++) {
+			if(!Find(ke[i], j) && i != j) kke[i].push_back(j);
+		}
+	}
+}
+
+bool cmp(vector<int> a, vector<int> b) {
+	return a.size() < b.size();
+}
+
+bool check() {
+	int cnt = 0;
+	sort(kke + 1, kke + n + 1, cmp);
+	for(int i = 1; i <= n; i++) {
+		if(!to[kke[i][0]]) {
+			++cnt;
+			for(int j : kke[i]) to[j] = true;
+		}
+	}
+//	for(int i = 1; i <= n; i++) {
+//		for(int j : kke[i]) {
+//			cout << j << " ";
+//		}
+//		cout << endl;
+//	}
+//	cout << cnt << endl;
+	return cnt <= k;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		ktao();
+		if(check()) cout << "YES" << endl;
+		else cout << "NO" << endl;
+	}
+}
