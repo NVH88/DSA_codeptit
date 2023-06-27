@@ -1,0 +1,25 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int a[1000005], cnt;
+
+void pre(int l, int r) {
+	if(l == r) ++cnt;
+	if(l >= r) return;
+	int idx = (l + r) / 2;
+	pre(l, idx - 1);
+	pre(idx + 1, r);
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cnt = 0;
+		int n; cin >> n;
+		for(int i = 1; i <= n; ++i) cin >> a[i];
+		sort(a + 1, a + n + 1);
+		pre(1, n);
+		cout << cnt << endl;
+	}
+}
+
