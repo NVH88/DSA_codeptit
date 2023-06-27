@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		string s; cin >> s;
+		stack<char> st1, st2;
+		int len = s.length();
+		for(int i = len - 1; i >= 0; --i) {
+			if(s[i] != '(') st1.push(s[i]);
+			else {
+				if(s[i - 1] == '-') {
+					while(st1.top() != ')') {
+						char x = st1.top(); st1.pop();
+						if(x == '-') st2.push('+');
+						else if(x == '+') st2.push('-');
+						else st2.push(x);
+					}
+				}
+				else {
+					while(st1.top() != ')') {
+						st2.push(st1.top()); st1.pop();
+					}
+				}
+				st1.pop();
+				while(st2.size()) st1.push(st2.top()), st2.pop();
+			}
+		}
+		while(st1.size()) {
+			cout << st1.top();
+			st1.pop();
+		}
+		cout << endl;
+	}
+}
