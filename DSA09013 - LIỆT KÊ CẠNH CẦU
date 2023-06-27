@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, m, cnt, low[1005], disc[1005], used[1005]; 
+vector<int> ke[1005];
+vector<pair<int, int>> cau;
+
+void dfs(int u, int par) {
+	used[u] = 1;
+	disc[u] = low[u] = ++cnt;
+	for(int i : ke[u]) {
+		if(i == par) continue;
+		if(!used[i]) {
+			dfs(i, u);
+			low[u] = min(low[u], low[i]);
+		}
+		else low[u] = min(low[u], disc[i]);
+		if(disc[u] < low[i]) cau.push_back({min(u, i), max(u, i)});
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cnt = 0;
+		memset(used, 0, sizeof(used));
+		cau.clear();
+		cin >> n >> m;
+		for(int i = 1; i <= n; ++i) ke[i].clear();
+		for(int i = 0; i < m; ++i) {
+			int a, b; cin >> a >> b;
+			ke[a].push_back(b); ke[b].push_back(a);
+		}
+		dfs(1, -1);
+		sort(cau.begin(), cau.end());
+		for(pair<int, int> p : cau) cout << p.first << " " << p.second << " ";
+		cout << endl;
+	}
+}
