@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> ke[1005];
+vector<int> ke2[1005];
+stack<int> st;
+int n, m, used[1005];
+
+void dfs1(int u) {
+	used[u] = 1;
+	for(int i : ke[u]) {
+		if(!used[i]) dfs1(i);
+	}
+	st.push(u);
+}
+
+void dfs2(int u) {
+	used[u] = 1;
+	for(int i : ke2[u]) {
+		if(!used[i]) dfs2(i);
+	}
+}
+
+void Kosa() {
+	memset(used, 0, sizeof(used));
+	for(int i = 1; i <= n; ++i) if(!used[i]) dfs1(i);
+	memset(used, 0, sizeof(used));
+	int cnt = 0;
+	while(st.size()) {
+		int i = st.top(); st.pop();
+		if(!used[i]) ++cnt, dfs2(i);
+	}
+	if(cnt == 1) cout << "YES" << endl;
+	else cout << "NO" << endl;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cin >> n >> m;
+		for(int i = 1; i <= n; ++i) ke[i].clear(), ke2[i].clear();
+		for(int i = 0; i < m; ++i) {
+			int x, y; cin >> x >> y; ke[x].push_back(y); ke2[y].push_back(x);
+		}
+		Kosa();
+	}
+}
