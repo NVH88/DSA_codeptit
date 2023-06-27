@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define pi pair<int, int>
+
+vector<pi> ke[1005];
+int n, m, k;
+
+void dijkstra(int u) {
+	int d[n + 1];
+	for(int i = 1; i <= n; ++i) d[i] = 1e9;
+	d[u] = 0;
+	priority_queue<pi, vector<pi>, greater<pi>> q;
+	q.push({0, u});
+	while(q.size()) {
+		pi i = q.top(); q.pop();
+		int f = i.first, s = i.second;
+		if(f == d[s]) {
+			for(pi j : ke[s]) {
+				if(d[j.second] > j.first + f) {
+					d[j.second] = j.first + f;
+					q.push({d[j.second], j.second});
+				}
+			}
+		}
+	}
+	for(int i = 1; i <= n; ++i) cout << d[i] << " "; cout << endl;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cin >> n >> m >> k;
+		for(int i = 1; i <= n; ++i) ke[i].clear();
+		for(int i = 0; i < m; ++i) {
+			int x, y, z; cin >> x >> y >> z;
+			ke[x].push_back({z, y});
+			ke[y].push_back({z, x});
+		}
+		dijkstra(k);
+	}
+}
