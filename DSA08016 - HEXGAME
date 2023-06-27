@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+string left1(string s) {
+	char x = s[0];
+	s[0] = s[3]; s[3] = s[7]; s[7] = s[8]; s[8] = s[5]; s[5] = s[1]; s[1] = x;
+	return s;
+}
+
+string right1(string s) {
+	char x = s[1];
+	s[1] = s[4]; s[4] = s[8]; s[8] = s[9]; s[9] = s[6]; s[6] = s[2]; s[2] = x;
+	return s;
+}
+
+string left2(string s) {
+	char x = s[0];
+	s[0] = s[1]; s[1] = s[5]; s[5] = s[8]; s[8] = s[7]; s[7] = s[3]; s[3] = x;
+	return s;
+}
+
+string right2(string s) {
+	char x = s[1];
+	s[1] = s[2]; s[2] = s[6]; s[6] = s[9]; s[9] = s[8]; s[8] = s[4]; s[4] = x;
+	return s;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		string s = "", f = "1238004765";
+		for(int i = 0; i < 10; ++i) {
+			string x; cin >> x; s += x;
+		}
+		if(s == f) {
+			cout << 0 << endl;
+			continue;
+		}
+		map<string, int> mp1, mp2;
+		queue<string> q1, q2;
+		q1.push(s); q2.push(f);
+		while(1) {
+			string a = q1.front(); q1.pop();
+			string b = q2.front(); q2.pop();
+			if(mp1.find(b) != mp1.end()) {
+				cout << mp1[b] + mp2[b] << endl;
+				break;
+			}
+			if(mp2.find(a) != mp2.end()) {
+				cout << mp1[a] + mp2[a] << endl;
+				break;
+			}
+			string i1 = left1(a), i2 = right1(a), j1 = left2(b), j2 = right2(b);
+			if(!mp1[i1]) mp1[i1] = mp1[a] + 1, q1.push(i1);
+			if(!mp1[i2]) mp1[i2] = mp1[a] + 1, q1.push(i2);
+			if(!mp2[j1]) mp2[j1] = mp2[b] + 1, q2.push(j1);
+			if(!mp2[j2]) mp2[j2] = mp2[b] + 1, q2.push(j2);
+		}
+	}
+}
