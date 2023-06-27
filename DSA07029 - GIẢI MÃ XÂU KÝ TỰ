@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		string s; cin >> s;
+		stack<string> st;
+		for(int i = s.length() - 1; i >= 0; --i) {
+			if(s[i] != '[' && !isdigit(s[i])) {
+				st.push(string(1, s[i]));
+			}
+			else if(s[i] == '[') {
+				string a = "";
+				while(st.top() != "]") {
+					a += st.top(); st.pop();
+				}
+				st.pop();
+				st.push(a);
+			}
+			else {
+				int a = 0, cnt = 0;
+				while(isdigit(s[i])) {
+					a = pow(10, cnt) * (s[i] - '0') + a;
+					++cnt;
+					--i;
+				}
+				++i;
+				while(--a) st.push(st.top());
+			}
+		}
+		while(st.size()) cout << st.top(), st.pop();
+		cout << endl;
+	}
+}
