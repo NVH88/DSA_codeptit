@@ -1,0 +1,37 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+string s;
+int x[205], used[205];
+set<string> se;
+
+void Try(int i, string a) {
+	if(i == s.length()) {
+		se.insert(a);
+		return;
+	}
+	if(s[i] != '(' && s[i] != ')') Try(i + 1, a + string(1, s[i]));
+	else if(s[i] == '(') {
+		Try(i + 1, a + "(");
+		used[x[i]] = 1;
+		Try(i + 1, a);
+		used[x[i]] = 0;
+	}
+	else {
+		if(used[i]) Try(i + 1, a);
+		else Try(i + 1, a + ")");
+	}
+}
+
+int main() {
+	cin >> s;
+	stack<int> st;
+	for(int i = 0; i < s.length(); ++i) {
+		if(s[i] == '(') st.push(i);
+		if(s[i] == ')') x[st.top()] = i, st.pop();
+	}
+	Try(0, "");
+	for(string i : se) {
+		if(i != s) cout << i << endl;
+	}
+}
