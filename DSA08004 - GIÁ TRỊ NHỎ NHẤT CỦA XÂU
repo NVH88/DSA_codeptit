@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		long long c[257] = {0}, n, ans = 0; cin >> n;
+		string s; cin >> s;
+		for(char i : s) ++c[i];
+		priority_queue<long long> q;
+		for(int i = 0; i < 257; ++i) {
+			if(c[i]) q.push(c[i]);
+		}
+		while(n--) {
+			long long top = q.top(); q.pop();
+			--top; if(top) q.push(top);
+		}
+		while(q.size()) {
+			ans += q.top() * q.top(); q.pop();
+		}
+		cout << ans << endl;
+	}
+}
