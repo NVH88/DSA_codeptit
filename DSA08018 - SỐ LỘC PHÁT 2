@@ -1,0 +1,22 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int n; cin >> n; ++n;
+		int sz = 0;
+		while(n--) sz += pow(2, n);
+		vector<long long> v;
+		queue<long long> q;
+		q.push(6); q.push(8);
+		while(--sz) {
+			long long x = q.front(); q.pop();
+			v.push_back(x);
+			q.push(x * 10 + 6); q.push(x * 10 + 8);
+		}
+		cout << v.size() << endl;
+		for(long long i : v) cout << i << " ";
+		cout << endl;
+	}
+}
