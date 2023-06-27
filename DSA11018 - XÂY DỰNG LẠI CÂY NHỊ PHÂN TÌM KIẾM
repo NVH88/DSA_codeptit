@@ -1,0 +1,34 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, in[10005], pre[10005], ttin[10005];
+
+void post(int l, int r) {
+	if(l > r) return;
+	int idx;
+	for(int i = 0; i < n; ++i) {
+		int j = ttin[pre[i]];
+		if(j >= l && j <= r) {
+			idx = j;
+			break;
+		}
+	}
+	cout << in[idx] << " ";
+	post(l, idx - 1);
+	post(idx + 1, r);
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cin >> n;
+		for(int i = 0; i < n; ++i) {
+			cin >> pre[i];
+			in[i] = pre[i];
+		}
+		sort(in, in + n);
+		for(int i = 0; i < n; ++i) ttin[in[i]] = i;
+		post(0, n - 1);
+		cout << endl;
+	}
+}
