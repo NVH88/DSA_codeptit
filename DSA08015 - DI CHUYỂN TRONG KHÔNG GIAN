@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int dx[] = {+1, -1, +0, +0, +0, +0};
+int dy[] = {+0, +0, +1, -1, +0, +0};
+int dz[] = {+0, +0, +0, +0, +1, -1};
+
+struct vitri {
+	int x, y, z;
+};
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int a, b, c; cin >> a >> b >> c;
+		char v[a][b][c];
+		int used[a][b][c];
+		memset(used, 0, sizeof(used));
+		vitri s, f;
+		for(int i = 0; i < a; ++i) {
+			for(int j = 0; j < b; ++j) {
+				for(int k = 0; k < c; ++k) {
+					cin >> v[i][j][k];
+					if(v[i][j][k] == 'S') s = (vitri){i, j, k}, used[i][j][k] = 1;
+					if(v[i][j][k] == 'E') f = (vitri){i, j, k};
+				}
+			}
+		}
+		queue<vitri> q;
+		q.push(s);
+		while(q.size()) {
+			vitri top = q.front(); q.pop();
+			int m = top.x, n = top.y, p = top.z;
+			if(m == f.x && n == f.y && p == f.z) {
+				cout << used[m][n][p] - 1 << endl;
+				break;
+			}
+			for(int k = 0; k < 6; ++k) {
+				int i = m + dx[k], j = n + dy[k], h = p + dz[k];
+				if(i >= 0 && j >= 0 && h >= 0 && i < a && j < b && h < c && !used[i][j][h] && v[i][j][h] != '#') {
+					used[i][j][h] = used[m][n][p] + 1;
+					q.push((vitri){i, j, h});
+				}
+			}
+		}
+		if(!used[f.x][f.y][f.z]) cout << -1 << endl;
+	}
+}
