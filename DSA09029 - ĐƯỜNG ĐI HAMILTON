@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> ke[1005];
+int n, m, ok, used[1005];
+
+void dfs(int u, int cnt) {
+	if(ok) return;
+	if(cnt == n) {
+		ok = 1;
+		return;
+	}
+	for(int i : ke[u]) {
+		if(!used[i]) {
+			used[i] = 1;
+			dfs(i, cnt + 1);
+			used[i] = 0;
+		}
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		ok = 0;
+		cin >> n >> m;
+		for(int i = 1; i <= n; ++i) ke[i].clear();
+		memset(used, 0, sizeof(used));
+		for(int i = 0; i < m; ++i) {
+			int a, b; cin >> a >> b;
+			ke[a].push_back(b); ke[b].push_back(a);
+		}
+		for(int i = 1; i <= n; ++i) {
+			used[i] = 1;
+			dfs(i, 1);
+			used[i] = 0;
+		}
+		cout << ok << endl;
+	}
+}
+
