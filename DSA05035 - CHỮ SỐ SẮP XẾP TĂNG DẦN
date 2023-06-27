@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+const int M = 1e9 + 7;
+
+ll dp[105][10];
+
+void ktao() {
+	for(int j = 0; j <= 9; j++) dp[1][j] = 1;
+	for(int i = 1; i <= 100; i++) dp[i][0] = 1;
+	for(int i = 2; i <= 100; i++) {
+		for(int j = 1; j <= 9; j++) {
+			dp[i][j] += dp[i - 1][j]; dp[i][j] %= M; //them chu so j vao cuoi
+			dp[i][j] += dp[i][j - 1]; dp[i][j] %= M; //thay chu so j - 1 thanh chu so j
+		}
+	}
+}
+
+int main() {
+	ktao();
+	int t; cin >> t;
+	while(t--) {
+		int n; cin >> n;
+		ll ans = 0;
+		for(int i = 0; i <= 9; i++) {
+			ans += dp[n][i];
+			ans %= M;
+		}
+		cout << ans << endl;
+	}
+}
