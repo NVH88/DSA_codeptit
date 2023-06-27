@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> ke[1005];
+bool visited[1005];
+int n, m, u, v; 
+int parent[1005];
+
+void ktao() {
+	for(int i = 1; i <= 1000; i++) ke[i].clear();
+	cin >> n >> m >> u >> v;
+	for(int i = 1; i <= m; i++) {
+		int x, y; cin >> x >> y;
+		ke[x].push_back(y);
+		ke[y].push_back(x);
+	}
+}
+
+void DFS(int u) {
+	visited[u] = true;
+	for(int i : ke[u]) {
+		if(!visited[i]) {
+			parent[i] = u;
+			DFS(i);
+		}
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		ktao();
+		memset(visited, false, sizeof(visited));
+		DFS(u);
+		if(!visited[v]) cout << -1 << endl;
+		else {
+			vector<int> vec;
+			while(v != u) {
+				vec.push_back(v);
+				v = parent[v];
+			}
+			vec.push_back(u);
+			reverse(vec.begin(), vec.end());
+			for(int i : vec) cout << i << " ";
+			cout << endl;
+		}
+	}
+}
