@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int dx[] = {-2, -1, +1, +2, -2, -1, +1, +2};
+int dy[] = {-1, -2, -2, -1, +1, +2, +2, +1};
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		string a, b; cin >> a >> b;
+		int used[10][10] = {0};
+		pair<int, int> s, f;
+		s = {a[0] - 'a' + 1, a[1] - '0'};
+		f = {b[0] - 'a' + 1, b[1] - '0'};
+		used[s.first][s.second] = 1;
+		queue<pair<int, int>> q;
+		q.push(s);
+		while(1) {
+			pair<int, int> p = q.front(); q.pop();
+			if(p == f) {
+				cout << used[f.first][f.second] - 1 << endl;
+				break;
+			}
+			for(int k = 0; k < 8; ++k) {
+				int i = p.first + dy[k], j = p.second + dx[k];
+				if(!used[i][j] && i > 0 && j > 0 && i < 9 && j < 9) {
+					q.push({i, j});
+					used[i][j] = used[p.first][p.second] + 1;
+				}
+			}
+		}
+	}
+}
