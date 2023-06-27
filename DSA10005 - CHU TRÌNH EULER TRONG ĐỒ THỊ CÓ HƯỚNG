@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> ke[1005];
+int used[1005], negdeg[1005], n, m;
+
+void dfs(int u) {
+	used[u] = 1;
+	for(int i : ke[u]) {
+		if(!used[i]) dfs(i);
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		for(int i = 1; i <= 1000; ++i) ke[i].clear();
+		memset(used, 0, sizeof(used));
+		memset(negdeg, 0, sizeof(negdeg));
+		cin >> n >> m;
+		for(int i = 0; i < m; ++i) {
+			int a, b; cin >> a >> b;
+			ke[a].push_back(b);
+			++negdeg[b];
+		}
+		int ans = 1;
+		for(int i = 1; i <= n; ++i) {
+			if(negdeg[i] != ke[i].size()) ans = 0;
+		}
+		if(ans) {
+			dfs(1);
+			for(int i = 1; i <= n; ++i) {
+				if(!used[i]) {
+					ans = 0;
+					break;
+				}
+			}
+		}
+		cout << ans << endl;
+	}
+}
