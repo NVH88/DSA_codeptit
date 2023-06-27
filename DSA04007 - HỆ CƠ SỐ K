@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+string calc(string a, string b, int k) {
+	if(a.length() < b.length()) swap(a, b);
+	int n = a.length() - 1, m = b.length() - 1;
+	string res = "";
+	int tmp = 0;
+	while(m >= 0) {
+		int x = a[n] - '0', y = b[m] - '0';
+		x += y + tmp;
+		if(x >= k) {
+			x -= k;
+			res = to_string(x) + res;
+			tmp = 1;
+		}
+		else {
+			res = to_string(x) + res;
+			tmp = 0;
+		}
+		--m; --n;
+	}
+	while(n >= 0) {
+		int x = a[n] - '0';
+		x += tmp;
+		if(x >= k) {
+			x -= k;
+			res = to_string(x) + res;
+			tmp = 1;
+		}
+		else {
+			res = to_string(x) + res;
+			tmp = 0;
+		}
+		--n;
+	}
+	if(tmp) res = "1" + res;
+	return res;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int k; cin >> k;
+		string a, b;
+		cin >> a >> b;
+		cout << calc(a, b, k) << endl;
+	}
+}
