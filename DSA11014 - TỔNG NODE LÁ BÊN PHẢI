@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct node {
+	int data;
+	node *l, *r;
+	node(int x) {
+		data = x;
+		l = r = NULL;
+	}
+};
+
+int calc(node *root) {
+	if(root == NULL) return 0;
+	if(root->r != NULL && root->r->l == NULL && root->r->r == NULL) return root->r->data + calc(root->l);
+	return calc(root->l) + calc(root->r);
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int n; cin >> n;
+		node *root = NULL;
+		map<int, node *> mp;
+		node *p, *q;
+		for(int i = 0; i < n; ++i) {
+			int a, b; char c; cin >> a >> b >> c;
+			if(root == NULL) {
+				root = new node(a); mp[a] = root;
+			}
+			if(mp.find(a) == mp.end()) {
+				p = new node(a);
+				mp[a] = p;
+			}
+			p = mp[a];
+			q = new node(b);
+			mp[b] = q;
+			if(c == 'L') p->l = q;
+			else p->r = q;
+		}
+		cout << calc(root) << endl;
+	}
+}
