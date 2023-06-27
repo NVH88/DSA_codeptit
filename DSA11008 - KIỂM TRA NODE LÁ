@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int cnt;
+
+struct node {
+	int data;
+	node *l, *r;
+	node(int x) {
+		data = x;
+		l = r = NULL;
+	}
+};
+
+void insert(node *root, int u, int v, char c) {
+	if(root == NULL) return;
+	if(root->data == u) {
+		if(c == 'L') root->l = new node(v);
+		else root->r = new node(v);
+		return;
+	}
+	insert(root->l, u, v, c);
+	insert(root->r, u, v, c);
+}
+
+bool check(node *root, int x) {
+	if(root->l == NULL && root->r == NULL) {
+		return x == cnt;
+	}
+	if(root->l != NULL) if(!check(root->l, x + 1)) return false;
+	if(root->r != NULL) if(!check(root->r, x + 1)) return false;
+	return true;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cnt = 0;
+		int n; cin >> n;
+		node *root = NULL;
+		for(int i = 0; i < n; ++i) {
+			int a, b; char c; cin >> a >> b >> c;
+			if(root == NULL) root = new node(a);
+			insert(root, a, b, c);
+		}
+		node *tmp = root;
+		while(tmp->l != NULL || tmp->r != NULL) {
+			if(tmp->l != NULL) {
+				++cnt; tmp = tmp->l;
+			}
+			else if(tmp->r != NULL) {
+				++cnt; tmp = tmp->r;
+			}
+		}
+		cout << check(root, 0) << endl;
+	}
+}
