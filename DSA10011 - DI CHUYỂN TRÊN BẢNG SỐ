@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define pi pair<int, int>
+
+int dx[] = {+0, -1, +1, +0}; int dy[] = {-1, +0, +0, +1};
+int n, m, a[505][505], d[250005];
+vector<pi> ke[250005];
+
+int dijkstra() {
+	for(int i = 0; i < n * m; ++i) d[i] = 1e9;
+	d[0] = a[0][0];
+	priority_queue<pi, vector<pi>, greater<pi>> q;
+	q.push({d[0], 0});
+	while(q.size()) {
+		pi i = q.top(); q.pop();
+		int f = i.first, s = i.second;
+		if(f == d[s]) {
+			for(pi j : ke[s]) {
+				if(d[j.second] > f + j.first) {
+					d[j.second] = f + j.first;
+					q.push({d[j.second], j.second});
+				}
+			}
+		}
+	}
+	return d[n * m - 1];
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cin >> n >> m;	
+		for(int i = 0; i < n * m; ++i) ke[i].clear();
+		for(int i = 0; i < n; ++i) {
+			for(int j = 0; j < m; ++j) {
+				cin >> a[i][j];
+			}
+		}	
+		for(int i = 0; i < n; ++i) {
+			for(int j = 0; j < m; ++j) {
+				int u = i * m + j;
+				for(int k = 0; k < 4; ++k) {
+					int i1 = i + dy[k], j1 = j + dx[k];
+					if(i1 >= 0 && i1 < n && j1 >= 0 && j1 < m) {
+						ke[u].push_back({a[i1][j1], i1 * m + j1});
+					}
+				}
+			}
+		}	
+		cout << dijkstra() << endl;
+	}
+}
