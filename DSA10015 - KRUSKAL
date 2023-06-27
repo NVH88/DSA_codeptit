@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define pi pair<int, int>
+
+int n, m;
+vector<pi> ke[1005];
+
+int prim(int s) {
+	int d = 0, cnt = 0, used[n + 1] = {0};
+	priority_queue<pi, vector<pi>, greater<pi>> q;
+	used[s] = 1;
+	for(pi i : ke[s]) {
+		q.push(i);
+	}
+	while(q.size()) {
+		if(cnt == n - 1) break;
+		pi i = q.top(); q.pop();
+		if(!used[i.second]) {
+			d += i.first; used[i.second] = 1; ++cnt;
+			for(pi j : ke[i.second]) {
+				if(!used[j.second]) q.push(j);
+			}
+		}
+	}
+	return d;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		cin >> n >> m;
+		for(int i = 1; i <= n; ++i) ke[i].clear();
+		for(int i = 0; i < m; ++i) {
+			int a, b, c; cin >> a >> b >> c;
+			ke[a].push_back({c, b}); ke[b].push_back({c, a});
+		}
+		cout << prim(1) << endl;
+	}
+}
