@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int n; cin >> n;
+		set<int> se;
+		se.insert(n);
+		queue<pair<int, int>> q;
+		q.push({n, 0});
+		while(1) {
+			pair<int, int> p = q.front(); q.pop();
+			int f = p.first, s = p.second;
+			if(f == 1) {
+				cout << s << endl;
+				break;
+			}
+			for(int i = 2; i <= sqrt(f); ++i) {
+				if(f % i == 0 && !se.count(f / i)) {
+					se.insert(f / i);
+					q.push({f / i, s + 1});
+				}
+			}
+			if(!se.count(f - 1)) se.insert(f - 1), q.push({f - 1, s + 1});
+		}
+	}
+}
