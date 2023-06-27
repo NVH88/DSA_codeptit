@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> ke[1005];
+int n, m, s, f, truoc[1005];
+bool visited[1005];
+
+void bfs(int u) {
+	queue<int> q;
+	q.push(u);
+	visited[u] = true;
+	while(q.size()) {
+		int t = q.front(); q.pop();
+		for(int i : ke[t]) {
+			if(!visited[i]) {
+				visited[i] = true;
+				q.push(i);
+				truoc[i] = t;
+			}
+		}
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		for(int i = 1; i <= 1000; ++i) ke[i].clear();
+		memset(visited, false, sizeof(visited));
+		cin >> n >> m >> s >> f;
+		for(int i = 0; i < m; ++i) {
+			int a, b; cin >> a >> b;
+			ke[a].push_back(b);
+		}
+		bfs(s);
+		if(!visited[f]) cout << -1 << endl;
+		else {
+			vector<int> v;
+			v.push_back(f);
+			while(f != s) {
+				f = truoc[f];
+				v.push_back(f);
+			}
+			for(int i = v.size() - 1; i >= 0; --i) cout << v[i] << " ";
+			cout << endl;
+		}
+	}
+}
