@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n, m, u, used[1005];
+vector<pair<int, int>> v;
+vector<int> ke[1005];
+
+void dfs(int s) {
+	used[s] = 1;
+	for(int i : ke[s]) {
+		if(!used[i]) {
+			v.push_back({s, i});
+			dfs(i);
+		}
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		v.clear();
+		memset(used, 0, sizeof(used));
+		cin >> n >> m >> u;
+		for(int i = 1; i <= n; ++i) ke[i].clear();
+		for(int i = 0; i < m; ++i) {
+			int x, y; cin >> x >> y;
+			ke[x].push_back(y);
+			ke[y].push_back(x);
+		}
+		dfs(u);
+		if(v.size() != n - 1) cout << -1 << endl;
+		else {
+			for(pair<int, int> i : v) cout << i.first << " " << i.second << endl;
+		}
+	}
+}
