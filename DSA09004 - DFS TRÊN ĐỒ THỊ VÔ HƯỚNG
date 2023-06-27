@@ -1,0 +1,37 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> ke[1005];
+bool visited[1005];
+
+void DFS(int s) {
+	stack<int> st;
+	st.push(s);
+	visited[s] = true;
+	cout << s << " ";
+	while(st.size()) {
+		int i = st.top(); st.pop();
+		for(int j : ke[i]) {
+			if(!visited[j]) {
+				cout << j << " ";
+				st.push(i); st.push(j);
+				visited[j] = true;
+				break;
+			}
+		}
+	}
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		for(int i = 1; i <= 1000; ++i) ke[i].clear();
+		memset(visited, false, sizeof(visited));
+		int a, b, c; cin >> a >> b >> c;
+		for(int i = 1; i <= b; ++i) {
+			int x, y; cin >> x >> y;
+			ke[x].push_back(y); ke[y].push_back(x);
+		}
+		DFS(c); cout << endl;
+	}
+}
