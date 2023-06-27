@@ -1,0 +1,27 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool laChu(char c) {
+	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+}
+
+string solve(string s) {
+	stack<string> st;
+	for(char i : s) {
+		if(laChu(i)) st.push(string(1, i));
+		else {
+			string x = st.top(); st.pop();
+			string y = st.top(); st.pop();
+			st.push("(" + y + string(1, i) + x + ")");
+		}
+	}
+	return st.top();
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		string s; cin >> s;
+		cout << solve(s) << endl;
+	}
+}
