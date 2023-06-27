@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> v;
+
+bool check(int x) {
+	map<int, int> mp;
+	while(x) {
+		if(mp[x % 10]) return false;
+		++mp[x % 10];
+		x /= 10;
+	}
+	return true;
+}
+
+void ktao() {
+	set<int> se; se.insert(0);
+	queue<int> q;
+	q.push(0);
+	while(1) {
+		int x = q.front(); q.pop();
+		if(x > 1e5) break;
+		for(int i = 0; i <= 5; ++i) {
+			int y = x * 10 + i;
+			if(check(y) && !se.count(y)) v.push_back(y), q.push(y);
+		}
+	}
+}
+
+int main() {
+	ktao();
+	int t; cin >> t;
+	while(t--) {
+		int n, m, cnt = 0; cin >> n >> m;
+		for(int i = 0; i < v.size(); ++i) {
+			if(v[i] > m) break;
+			if(n <= v[i]) ++cnt;
+		}
+		cout << cnt << endl;
+	}
+}
