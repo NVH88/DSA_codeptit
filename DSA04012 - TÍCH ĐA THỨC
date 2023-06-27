@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+ll a[205], x[105], y[105], m, n;
+
+void ktao() {
+	cin >> m >> n;
+	for(int i = 0; i < m; i++) cin >> x[i];
+	for(int i = 0; i < n; i++) cin >> y[i];
+	memset(a, 0, sizeof(a));
+}
+
+void solve() {
+	for(int i = 0; i < m; i++) {
+		for(int j = 0; j < n; j++) {
+			a[i + j] += x[i] * y[j];
+		}
+	}
+	for(int i = 0; i < m + n - 1; i++) {
+		cout << a[i] << " ";
+	}
+	cout << endl;
+}
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		ktao();
+		solve();
+	}
+}
