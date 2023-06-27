@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int t; cin >> t;
+	while(t--) {
+		int n; cin >> n;
+		char c[n][n];
+		for(int i = 0; i < n; ++i) {
+			for(int j = 0; j < n; ++j) {
+				cin >> c[i][j];
+			}
+		}
+		vector<pair<int, int>> ke[105][105];
+		int x, y, z, t; cin >> x >> y >> z >> t;
+		for(int i = 0; i < n; ++i) {
+			for(int j = 0; j < n; ++j) {
+				if(c[i][j] == '.') {
+					int i1 = i + 1, i2 = i - 1, j1 = j + 1, j2 = j - 1;
+					while(i1 < n && c[i1][j] != 'X') {
+						ke[i][j].push_back({i1, j});
+						++i1;
+					}
+					while(i2 >= 0 && c[i2][j] != 'X') {
+						ke[i][j].push_back({i2, j});
+						--i2;
+					}
+					while(j1 < n && c[i][j1] != 'X') {
+						ke[i][j].push_back({i, j1});
+						++j1;
+					}
+					while(j2 >= 0 && c[i][j2] != 'X') {
+						ke[i][j].push_back({i, j2});
+						--j2;
+					}
+				}
+			}
+		}
+		int used[105][105] = {0};
+		used[x][y] = 1;
+		queue<pair<int, int>> q;
+		q.push({x, y});
+		while(q.size()) {
+			pair<int, int> p = q.front(); q.pop();
+			int a = p.first, b = p.second;
+			if(a == z && b == t) {
+				cout << used[a][b] - 1 << endl;
+				break;
+			}
+			for(pair<int, int> i : ke[a][b]) {
+				int j = i.first, k = i.second;
+				if(!used[j][k]) {
+					used[j][k] = used[a][b] + 1;
+					q.push({j, k});
+				}
+			}
+		}
+	}
+}
